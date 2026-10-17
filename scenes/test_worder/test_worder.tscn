@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://8os00pnyslco"]
+
+[ext_resource type="PackedScene" uid="uid://cma81nh6acy58" path="res://entities/actor/actor.tscn" id="1_nekld"]
+
+[node name="TestWorder" type="Node2D" unique_id=193179678]
+
+[node name="Actor" parent="." unique_id=152766350 instance=ExtResource("1_nekld")]
