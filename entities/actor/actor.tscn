@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cma81nh6acy58"]
+
+[ext_resource type="Script" uid="uid://bsu2wdj4gw44k" path="res://entities/actor/actor.gd" id="1_oawin"]
+[ext_resource type="Script" uid="uid://c3utxe7aveefo" path="res://systems/input_handler/input_handler.gd" id="2_a10js"]
+
+[node name="Actor" type="Node2D" unique_id=152766350]
+script = ExtResource("1_oawin")
+metadata/_custom_type_script = "uid://bsu2wdj4gw44k"
+
+[node name="InputHandler" type="Node" parent="." unique_id=178228284]
+script = ExtResource("2_a10js")
+metadata/_custom_type_script = "uid://c3utxe7aveefo"
