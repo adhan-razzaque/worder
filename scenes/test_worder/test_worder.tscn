@@ -5,3 +5,44 @@
 [node name="TestWorder" type="Node2D" unique_id=193179678]
 
 [node name="Actor" parent="." unique_id=152766350 instance=ExtResource("1_nekld")]
+
+[node name="IndexButton1" type="Button" parent="." unique_id=949477014]
+offset_left = 142.0
+offset_top = 94.0
+offset_right = 233.0
+offset_bottom = 125.0
+text = "Index 1"
+
+[node name="IndexButton2" type="Button" parent="." unique_id=1012979995]
+offset_left = 345.0
+offset_top = 90.0
+offset_right = 436.0
+offset_bottom = 121.0
+text = "Index 2"
+
+[node name="IndexButton3" type="Button" parent="." unique_id=1166095430]
+offset_left = 564.0
+offset_top = 89.0
+offset_right = 655.0
+offset_bottom = 120.0
+text = "Index 3"
+
+[node name="IndexButton4" type="Button" parent="." unique_id=997810658]
+offset_left = 730.0
+offset_top = 90.0
+offset_right = 821.0
+offset_bottom = 121.0
+text = "Index 4"
+
+[node name="IndexButton5" type="Button" parent="." unique_id=977168441]
+offset_left = 918.0
+offset_top = 91.0
+offset_right = 1009.0
+offset_bottom = 122.0
+text = "Index 5"
+
+[connection signal="pressed" from="IndexButton1" to="Actor" method="set_index" binds= [0]]
+[connection signal="pressed" from="IndexButton2" to="Actor" method="set_index" binds= [1]]
+[connection signal="pressed" from="IndexButton3" to="Actor" method="set_index" binds= [2]]
+[connection signal="pressed" from="IndexButton4" to="Actor" method="set_index" binds= [3]]
+[connection signal="pressed" from="IndexButton5" to="Actor" method="set_index" binds= [4]]
