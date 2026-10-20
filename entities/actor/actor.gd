@@ -12,6 +12,8 @@ const max_letters: int = 5
 var letter_list: Array[String]
 var _current_lives: int
 var _index: int
+var _removed_letters: Array[String]
+var _submitted_words: Array[String]
 
 func _ready() -> void:
 	_register_callbacks()
@@ -25,6 +27,7 @@ func _reset_state() -> void:
 	_current_lives = start_lives
 	letter_list = []
 	_index = 0
+	_removed_letters = []
 
 func on_letter_received(letter: String) -> void:
 	print_debug("Actor received ", letter)
@@ -51,6 +54,8 @@ func on_submit_received() -> void:
 	var response = word_validator.is_word_valid(word)
 	print_debug("Submitted word ", word, " is valid: ", response.is_valid,
 	" for reason ", response.reason)
+	if response.is_valid:
+		word_validator.track_word(word)
 
 
 func get_current_word() -> String:
