@@ -13,7 +13,6 @@ var letter_list: Array[String]
 var _current_lives: int
 var _index: int
 var _removed_letters: Array[String]
-var _submitted_words: Array[String]
 
 func _ready() -> void:
 	_register_callbacks()
