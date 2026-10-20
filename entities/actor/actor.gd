@@ -29,8 +29,9 @@ func on_submit_received() -> void:
 		print_debug("Enter rejected, not enough letters")
 	
 	var word: String = get_current_word()
-	var word_is_valid = word_validator.is_word_valid(word)
-	print_debug("Submitted word ", word, " is valid: ", word_is_valid)
+	var response = word_validator.is_word_valid(word)
+	print_debug("Submitted word ", word, " is valid: ", response.is_valid,
+	" for reason ", response.reason)
 
 
 func get_current_word() -> String:

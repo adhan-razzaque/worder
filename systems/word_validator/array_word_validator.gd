@@ -7,5 +7,7 @@ const _word_whitelist: Array[String] = [
 	"fooba",
 	]
 
-func is_word_valid(word: String) -> bool:
-	return word.to_lower() in _word_whitelist
+func is_word_valid(word: String) -> ValidationResponse:
+	var is_valid = word.to_lower() in _word_whitelist
+	var reason = "Word not contained in list" if not is_valid else ""
+	return ValidationResponse.new(is_valid, reason)
