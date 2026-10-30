@@ -8,6 +8,7 @@ signal rejected_letter(letter: String, reason: String)
 signal rejected_word(word: String, reason: String)
 
 @export var start_lives: int = 3
+@export var active_on_ready: bool = true
 
 @onready var input_handler: InputHandler = $InputHandler
 @onready var word_validator: BaseWordValidator = ArrayWordValidator.new()
@@ -23,16 +24,23 @@ var _removed_letters: Array[String]
 func _ready() -> void:
 	_register_callbacks()
 	_reset_state()
+	set_active(active_on_ready)
+	GameManagerSingleton.register_player(self)
 
 func _register_callbacks() -> void:
 	input_handler.letter_received.connect(on_letter_received)
 	input_handler.submit_received.connect(on_submit_received)
+	GameManagerSingleton.round_started.connect(self.on_round_started)
 
 func _reset_state() -> void:
 	_current_lives = start_lives
 	letter_list = []
 	_index = 0
 	_removed_letters = []
+
+func on_round_started() -> void:
+	letter_list = []
+	_index = 0
 
 func on_letter_received(letter: String) -> void:
 	print_debug("Actor received ", letter)
@@ -75,9 +83,14 @@ func on_submit_received() -> void:
 	if not response.is_valid:
 		rejected_word.emit(word, response.reason)
 		return
+	
+	var word_accepted: bool = GameManagerSingleton.submit_word(self, word)
+	
+	if not word_accepted:
+		print_debug("Game rejected word")
+		return
 
 	word_validator.track_word(word)
-	_removed_letters.append_array(letter_list)
 	clear_word()
 
 func get_current_word() -> String:
@@ -91,3 +104,18 @@ func set_index(new_index: int) -> void:
 	new_index = min(new_index, len(letter_list))
 	_index = new_index
 	print_debug("New index: ", _index)
+
+## Lose a life, returns whether actor died as a result
+func lose_life() -> bool:
+	_current_lives -= 1
+	
+	return is_dead()
+
+func set_active(active: bool) -> void:
+	input_handler.set_process_input(active)
+
+func remove_letters(letters: Array[String]) -> void:
+	_removed_letters.append_array(letters)
+
+func is_dead() -> bool:
+	return _current_lives <= 0

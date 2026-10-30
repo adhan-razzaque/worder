@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://coo7dq04110ts"]
+
+[ext_resource type="Script" uid="uid://ck0cn4royc0mo" path="res://systems/game_manager/game_manager.gd" id="1_lygkw"]
+
+[node name="GameManagerSingleton" type="Node" unique_id=1521924930]
+script = ExtResource("1_lygkw")
+metadata/_custom_type_script = "uid://ck0cn4royc0mo"
+
+[node name="RoundTimer" type="Timer" parent="." unique_id=1085381803]
+wait_time = 30.0
+one_shot = true

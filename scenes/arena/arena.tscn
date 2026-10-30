@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://damsffyqkto8r"]
+
+[ext_resource type="PackedScene" uid="uid://cma81nh6acy58" path="res://entities/actor/actor.tscn" id="1_1qjuf"]
+[ext_resource type="Script" uid="uid://doxmh4w30fdxs" path="res://entities/test_buttons/start_round_button.gd" id="2_8trdl"]
+
+[node name="Arena" type="Node2D" unique_id=2142554837]
+
+[node name="Actor" parent="." unique_id=152766350 instance=ExtResource("1_1qjuf")]
+active_on_ready = false
+
+[node name="Actor2" parent="." unique_id=1583945065 instance=ExtResource("1_1qjuf")]
+active_on_ready = false
+
+[node name="StartRoundButton" type="Button" parent="." unique_id=755222999]
+offset_left = 553.0
+offset_top = 119.0
+offset_right = 739.0
+offset_bottom = 189.0
+text = "Start"
+script = ExtResource("2_8trdl")
+metadata/_custom_type_script = "uid://doxmh4w30fdxs"
