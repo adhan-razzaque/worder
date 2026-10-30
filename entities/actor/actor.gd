@@ -1,10 +1,16 @@
 class_name Actor
 extends Node2D
 
-@onready var input_handler: InputHandler = $InputHandler
-@onready var word_validator: BaseWordValidator = ArrayWordValidator.new()
+## Emitted when a letter is rejected, provides letter and a reason
+signal rejected_letter(letter: String, reason: String)
+
+## Emitted when a word is rejected, provides word and a reason
+signal rejected_word(word: String, reason: String)
 
 @export var start_lives: int = 3
+
+@onready var input_handler: InputHandler = $InputHandler
+@onready var word_validator: BaseWordValidator = ArrayWordValidator.new()
 
 const max_letters: int = 5
 
@@ -30,6 +36,13 @@ func _reset_state() -> void:
 
 func on_letter_received(letter: String) -> void:
 	print_debug("Actor received ", letter)
+	
+	if letter in _removed_letters:
+		var reason: String = "Rejected letter because it's currently removed: %s" % letter
+		print_debug(reason)
+		rejected_letter.emit(letter, reason)
+		print_debug("Current word: ", get_current_word())
+		return
 
 	if _index == len(letter_list):
 		if len(letter_list) == max_letters:
@@ -46,20 +59,34 @@ func on_letter_received(letter: String) -> void:
 
 func on_submit_received() -> void:
 	print_debug("Actor received enter")
-	if len(letter_list) != max_letters:
-		print_debug("Enter rejected, not enough letters")
-	
+
 	var word: String = get_current_word()
+
+	if len(letter_list) != max_letters:
+		var reason: String = "Word rejected, not enough letters"
+		print_debug(reason)
+		rejected_word.emit(word, reason)
+		return
+
 	var response = word_validator.is_word_valid(word)
 	print_debug("Submitted word ", word, " is valid: ", response.is_valid,
-	" for reason ", response.reason)
-	if response.is_valid:
-		word_validator.track_word(word)
+	" for reason: ", response.reason)
 
+	if not response.is_valid:
+		rejected_word.emit(word, response.reason)
+		return
+
+	word_validator.track_word(word)
+	_removed_letters.append_array(letter_list)
+	clear_word()
 
 func get_current_word() -> String:
 	return "".join(letter_list)
-	
+
+func clear_word() -> void:
+	letter_list.clear()
+	_index = 0
+
 func set_index(new_index: int) -> void:
 	new_index = min(new_index, len(letter_list))
 	_index = new_index
