@@ -7,6 +7,9 @@ signal rejected_letter(letter: String, reason: String)
 ## Emitted when a word is rejected, provides word and a reason
 signal rejected_word(word: String, reason: String)
 
+## Emitted when there is a change in Actor's View Information
+signal actor_view_struct_changed(actor_view_struct: ActorViewStruct)
+
 @export var start_lives: int = 3
 @export var active_on_ready: bool = true
 
@@ -19,7 +22,7 @@ const max_letters: int = 5
 var letter_list: Array[String]
 var _current_lives: int
 var _index: int
-var _removed_letters: Array[String]
+var _removed_letters: Dictionary[String, Object]
 
 func _ready() -> void:
 	_register_callbacks()
@@ -36,16 +39,18 @@ func _reset_state() -> void:
 	_current_lives = start_lives
 	letter_list = []
 	_index = 0
-	_removed_letters = []
+	_removed_letters = {}
 
 func on_round_started() -> void:
 	letter_list = []
 	_index = 0
+	var new_actor_view_struct := ActorViewStruct.new(_removed_letters.keys())
+	actor_view_struct_changed.emit(new_actor_view_struct)
 
 func on_letter_received(letter: String) -> void:
 	print_debug("Actor received ", letter)
 	
-	if letter in _removed_letters:
+	if _removed_letters.has(letter):
 		var reason: String = "Rejected letter because it's currently removed: %s" % letter
 		print_debug(reason)
 		rejected_letter.emit(letter, reason)
@@ -115,7 +120,9 @@ func set_active(active: bool) -> void:
 	input_handler.set_process_input(active)
 
 func remove_letters(letters: Array[String]) -> void:
-	_removed_letters.append_array(letters)
+	for letter in letters:
+		_removed_letters.set(letter, null)
+	
 
 func is_dead() -> bool:
 	return _current_lives <= 0
