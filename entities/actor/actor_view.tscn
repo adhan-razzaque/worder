@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://sqxq4cq0joiu"]
+
+[ext_resource type="Script" uid="uid://bwve7m2p35uwg" path="res://entities/actor/actor_view.gd" id="1_7spd2"]
+
+[node name="ActorView" type="Control" unique_id=1769294805]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7spd2")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1292735453]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 211.0
+offset_bottom = 180.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1387555650]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=112030200]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=509025199]
+layout_mode = 2
+text = "Removed Letters"
+horizontal_alignment = 1
+
+[node name="RemovedLetterLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1655859019]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+text = "a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q ,r, s, t, u, v, w, x, y, z"
+autowrap_mode = 1
