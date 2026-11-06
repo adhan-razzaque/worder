@@ -15,6 +15,9 @@ signal round_ended()
 ## Minimum players accepted in this game
 @export var min_players: int = 2
 
+## Start when minimum players reached
+@export var start_on_min_reach: bool = false
+
 enum RoundState {INPUT, INPUT_LOOP, RESOLUTION, ENDED, GAMEOVER}
 
 var _current_round_state: RoundState = RoundState.GAMEOVER
@@ -24,6 +27,10 @@ var _player_order: Array[String] = []
 var _current_index: int = 0
 var _player_submissions: Dictionary[String, String] = {}
 @onready var _round_timer: Timer = $RoundTimer
+
+var round_active: bool :
+	get:
+		return _current_round_state not in [RoundState.GAMEOVER, RoundState.ENDED]
 
 func _process(_delta: float) -> void:
 	if _current_round_state == RoundState.GAMEOVER:
@@ -137,7 +144,19 @@ func register_player(actor: Actor) -> bool:
 	_player_order.push_back(key)
 	player_registered.emit(key)
 	print_debug("Registered ", key)
+	
+	if _active_players.size() == min_players:
+		countdown_start_coroutine(3)
+	
 	return true
+
+
+## Starts Round after counting down for `seconds` seconds
+func countdown_start_coroutine(seconds: float) -> void:
+	print_debug("Round starting in ", seconds, " seconds")
+	await get_tree().create_timer(seconds).timeout
+	start_round()
+
 
 func unregister_player(actor: Actor) -> void:
 	var key: String = actor.name
@@ -154,7 +173,7 @@ func start_round() -> void:
 	if _active_players.size() < min_players:
 		push_warning("Rejected: ", _active_players.size(), " < ", min_players)
 		return
-	if _current_round_state not in [RoundState.GAMEOVER, RoundState.ENDED]:
+	if self.round_active:
 		push_error("Game already in progress")
 		return
 	
