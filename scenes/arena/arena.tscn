@@ -3,22 +3,28 @@
 [ext_resource type="PackedScene" uid="uid://cma81nh6acy58" path="res://entities/actor/actor.tscn" id="1_1qjuf"]
 [ext_resource type="PackedScene" uid="uid://sqxq4cq0joiu" path="res://entities/actor/actor_view.tscn" id="1_8trdl"]
 
-[node name="Arena" type="Node2D" unique_id=2142554837]
+[node name="Arena" type="Control" unique_id=1229973118]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="ActorView" parent="." unique_id=1769294805 instance=ExtResource("1_8trdl")]
+layout_mode = 1
 offset_left = 182.0
 offset_top = 152.0
 offset_right = 182.0
 offset_bottom = 152.0
 
 [node name="Actor" parent="ActorView" unique_id=152766350 instance=ExtResource("1_1qjuf")]
+start_lives = 3
 active_on_ready = false
 
 [node name="ActorView2" parent="." unique_id=1404720683 instance=ExtResource("1_8trdl")]
+layout_mode = 1
 offset_left = 710.0
 offset_top = 160.0
 offset_right = 710.0
 offset_bottom = 160.0
 
 [node name="Actor" parent="ActorView2" unique_id=1583945065 instance=ExtResource("1_1qjuf")]
+start_lives = 3
 active_on_ready = false

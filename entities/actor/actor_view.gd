@@ -2,22 +2,29 @@ class_name ActorView
 extends Control
 
 
-@onready var removed_letter_display: Label = %RemovedLetterLabel
+@onready var removed_letter_label: Label = %RemovedLetterLabel
+@onready var entered_letter_label: Label = %EnteredLettersLabel
 @onready var actor: Actor = $Actor
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	removed_letter_display.text = ""
+	removed_letter_label.text = ""
+	entered_letter_label.text = ""
 	_register_callbacks()
 
 
 func _register_callbacks() -> void:
-	actor.actor_view_struct_changed.connect(_on_actor_view_struct_changed)
+	actor.letters_removed.connect(_on_letters_removed)
+	actor.word_updated.connect(_on_word_updated)
 
 
-func _on_actor_view_struct_changed(actor_view_struct: ActorViewStruct) -> void:
-	removed_letter_display.text = ", ".join(actor_view_struct._removed_letters)
+func _on_letters_removed(letters: Array[String]) -> void:
+	removed_letter_label.text = ", ".join(letters)
+
+
+func _on_word_updated(word: String) -> void:
+	entered_letter_label.text = word
 
 
 func _get_configuration_warnings() -> PackedStringArray:

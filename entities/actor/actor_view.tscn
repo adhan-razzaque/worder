@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://sqxq4cq0joiu"]
 
 [ext_resource type="Script" uid="uid://bwve7m2p35uwg" path="res://entities/actor/actor_view.gd" id="1_7spd2"]
+[ext_resource type="Theme" uid="uid://bqdnjgipkale0" path="res://entities/actor/actor_view.tres" id="2_vxa2f"]
 
 [node name="ActorView" type="Control" unique_id=1769294805]
 layout_mode = 3
@@ -9,28 +10,54 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_vxa2f")
 script = ExtResource("1_7spd2")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1292735453]
+[node name="RemovedLettersPanelContainer" type="PanelContainer" parent="." unique_id=1292735453]
 layout_mode = 0
-offset_left = 1.0
-offset_right = 211.0
-offset_bottom = 180.0
+offset_top = 136.0
+offset_right = 246.0
+offset_bottom = 242.0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1387555650]
+[node name="MarginContainer" type="MarginContainer" parent="RemovedLettersPanelContainer" unique_id=1387555650]
+layout_mode = 2
+theme = ExtResource("2_vxa2f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RemovedLettersPanelContainer/MarginContainer" unique_id=112030200]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=112030200]
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=509025199]
+[node name="TitleLabel" type="Label" parent="RemovedLettersPanelContainer/MarginContainer/VBoxContainer" unique_id=509025199]
 layout_mode = 2
 text = "Removed Letters"
 horizontal_alignment = 1
 
-[node name="RemovedLetterLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1655859019]
+[node name="RemovedLetterLabel" type="Label" parent="RemovedLettersPanelContainer/MarginContainer/VBoxContainer" unique_id=1655859019]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 text = "a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q ,r, s, t, u, v, w, x, y, z"
+autowrap_mode = 1
+
+[node name="EnteredLettersPanelContainer" type="PanelContainer" parent="." unique_id=1775190377]
+layout_mode = 0
+offset_right = 242.0
+offset_bottom = 112.0
+
+[node name="MarginContainer" type="MarginContainer" parent="EnteredLettersPanelContainer" unique_id=2047524784]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EnteredLettersPanelContainer/MarginContainer" unique_id=1070667784]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="EnteredLettersPanelContainer/MarginContainer/VBoxContainer" unique_id=1610358755]
+layout_mode = 2
+text = "Entered Letters"
+horizontal_alignment = 1
+
+[node name="EnteredLettersLabel" type="Label" parent="EnteredLettersPanelContainer/MarginContainer/VBoxContainer" unique_id=1369375314]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+text = "W O R D S"
+horizontal_alignment = 1
 autowrap_mode = 1

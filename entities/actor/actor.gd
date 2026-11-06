@@ -7,8 +7,11 @@ signal rejected_letter(letter: String, reason: String)
 ## Emitted when a word is rejected, provides word and a reason
 signal rejected_word(word: String, reason: String)
 
-## Emitted when there is a change in Actor's View Information
-signal actor_view_struct_changed(actor_view_struct: ActorViewStruct)
+## Emitted when removed letters is updated
+signal letters_removed(letters: Array[String])
+
+## Emitted when current words has updated
+signal word_updated(word: String)
 
 @export var start_lives: int = 3
 @export var active_on_ready: bool = true
@@ -44,8 +47,8 @@ func _reset_state() -> void:
 func on_round_started() -> void:
 	letter_list = []
 	_index = 0
-	var new_actor_view_struct := ActorViewStruct.new(_removed_letters.keys())
-	actor_view_struct_changed.emit(new_actor_view_struct)
+	letters_removed.emit(_removed_letters.keys())
+	word_updated.emit(get_current_word())
 
 func on_letter_received(letter: String) -> void:
 	print_debug("Actor received ", letter)
@@ -68,6 +71,7 @@ func on_letter_received(letter: String) -> void:
 		_index += 1
 	
 	print_debug("Current word: ", get_current_word())
+	word_updated.emit(get_current_word())
 
 
 func on_submit_received() -> void:
