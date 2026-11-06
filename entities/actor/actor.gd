@@ -1,5 +1,5 @@
 class_name Actor
-extends Node2D
+extends Node
 
 ## Emitted when a letter is rejected, provides letter and a reason
 signal rejected_letter(letter: String, reason: String)
@@ -13,7 +13,7 @@ signal actor_view_struct_changed(actor_view_struct: ActorViewStruct)
 @export var start_lives: int = 3
 @export var active_on_ready: bool = true
 
-@onready var input_handler: InputHandler = $InputHandler
+@onready var input_handler: InputHandler = %InputHandler
 @onready var word_validator: BaseWordValidator = ArrayWordValidator.new()
 
 const max_letters: int = 5
