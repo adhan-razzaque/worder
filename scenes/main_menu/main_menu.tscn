@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://b5te8flotwlhm"]
 
+[ext_resource type="Script" uid="uid://bfyf6th1dw2jw" path="res://scenes/main_menu/main_menu.gd" id="1_0ebjn"]
 [ext_resource type="Theme" uid="uid://cgl8qey1ocgkt" path="res://scenes/main_menu/main_menu_theme.tres" id="1_fsom3"]
 
-[node name="Main Menu" type="Control" unique_id=994718113]
+[node name="MainMenu" type="Control" unique_id=994718113]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_0ebjn")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=341914054]
 layout_mode = 1
@@ -38,11 +40,13 @@ text = "Worder"
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2100308157]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_fsom3")
 text = "Start"
 
 [node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=34007215]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_fsom3")
 text = "Exit"
