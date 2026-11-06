@@ -22,10 +22,10 @@ enum RoundState {INPUT, INPUT_LOOP, RESOLUTION, ENDED, GAMEOVER}
 
 var _current_round_state: RoundState = RoundState.GAMEOVER
 var _round_number: int = 0
-var _active_players: Dictionary[String, Actor] = {}
-var _player_order: Array[String] = []
+var _active_players: Dictionary[int, Actor] = {}
+var _player_order: Array[int] = []
 var _current_index: int = 0
-var _player_submissions: Dictionary[String, String] = {}
+var _player_submissions: Dictionary[int, String] = {}
 @onready var _round_timer: Timer = $RoundTimer
 
 var round_active: bool :
@@ -45,7 +45,7 @@ func _process(_delta: float) -> void:
 		push_error("Unhandled RoundState ", _current_round_state)
 
 func handle_input_state() -> void:
-	var player_key: String = _player_order[_current_index]
+	var player_key: int = _player_order[_current_index]
 	var player: Actor = _active_players[player_key]
 	
 	if _current_round_state == RoundState.INPUT:
@@ -71,7 +71,7 @@ func handle_input_state() -> void:
 	_current_round_state = RoundState.RESOLUTION
 
 func handle_resolution_state() -> void:
-	var player_key: String = _player_order[_current_index]
+	var player_key: int = _player_order[_current_index]
 	var player: Actor = _active_players[player_key]
 
 	if player_key not in _player_submissions:
@@ -98,7 +98,7 @@ func handle_ended_state() -> void:
 	else:
 		start_round()
 
-func _apply_letter_penalty(submission_key: String) -> void:
+func _apply_letter_penalty(submission_key: int) -> void:
 	var word: String = _player_submissions[submission_key]
 	var letters: PackedStringArray = word.split()
 	
@@ -126,7 +126,8 @@ func _apply_letter_penalty(submission_key: String) -> void:
 		opponent.remove_letters(result)
 
 func submit_word(actor: Actor, word: String) -> bool:
-	_player_submissions[actor.name] = word
+	var key: int = _get_player_id(actor)
+	_player_submissions[key] = word
 	return true
 
 func register_player(actor: Actor) -> bool:
@@ -134,7 +135,7 @@ func register_player(actor: Actor) -> bool:
 		push_warning("Maximum players of ", max_players, " players reached.")
 		return false
 	
-	var key: String = actor.name
+	var key: int = _get_player_id(actor)
 	
 	if key in _active_players:
 		push_error("Player already registered: ", key)
@@ -159,10 +160,10 @@ func countdown_start_coroutine(seconds: float) -> void:
 
 
 func unregister_player(actor: Actor) -> void:
-	var key: String = actor.name
+	var key: int = _get_player_id(actor)
 	
 	if key not in _active_players:
-		push_warning("Player already unregistereed: ", actor.name)
+		push_warning("Player already unregistered: ", actor.get_path())
 		return
 
 	_active_players.erase(key)
@@ -186,3 +187,6 @@ func end_round() -> void:
 	_round_number += 1
 	_current_round_state = RoundState.ENDED
 	round_ended.emit()
+
+func _get_player_id(actor: Actor) -> int:
+	return actor.get_instance_id()
