@@ -3,7 +3,7 @@ extends Node
 
 signal player_registered(id: String)
 signal player_unregistered(id: String)
-signal round_started()
+signal round_started(number: int)
 signal round_ended()
 
 ## Round length in seconds
@@ -180,7 +180,7 @@ func start_round() -> void:
 	
 	print_debug("Round ", _round_number, " is starting...")
 	_current_index = 0
-	round_started.emit()
+	round_started.emit(_round_number)
 	_current_round_state = RoundState.INPUT
 
 func end_round() -> void:

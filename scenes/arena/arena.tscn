@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cma81nh6acy58" path="res://entities/actor/actor.tscn" id="1_1qjuf"]
 [ext_resource type="PackedScene" uid="uid://sqxq4cq0joiu" path="res://entities/actor/actor_view.tscn" id="1_8trdl"]
+[ext_resource type="PackedScene" uid="uid://by05nn48beccc" path="res://scenes/arena/round_display.tscn" id="3_5tue2"]
 
 [node name="Arena" type="Control" unique_id=1229973118]
 layout_mode = 3
@@ -28,3 +29,6 @@ offset_bottom = 160.0
 [node name="Actor" parent="ActorView2" unique_id=1583945065 instance=ExtResource("1_1qjuf")]
 start_lives = 3
 active_on_ready = false
+
+[node name="RoundDisplay" parent="." unique_id=393426583 instance=ExtResource("3_5tue2")]
+layout_mode = 0

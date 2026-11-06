@@ -36,7 +36,7 @@ func _ready() -> void:
 func _register_callbacks() -> void:
 	input_handler.letter_received.connect(on_letter_received)
 	input_handler.submit_received.connect(on_submit_received)
-	GameManagerSingleton.round_started.connect(self.on_round_started)
+	GameManagerSingleton.round_started.connect(on_round_started)
 
 func _reset_state() -> void:
 	_current_lives = start_lives
@@ -44,7 +44,7 @@ func _reset_state() -> void:
 	_index = 0
 	_removed_letters = {}
 
-func on_round_started() -> void:
+func on_round_started(number: int) -> void:
 	letter_list = []
 	_index = 0
 	letters_removed.emit(_removed_letters.keys())
